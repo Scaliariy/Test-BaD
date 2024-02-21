@@ -28,40 +28,22 @@ def get_average(array):
     return sum(array) / len(array)
 
 
-def get_max_asc_sequence(array):
-    max_asc_sequence = []
+def get_max_sequence(array, reverse=False):
+    max_sequence = []
     current_sequence = [array[0]]
 
     for i in range(1, len(array)):
-        if array[i] > array[i - 1]:
+        if (reverse and array[i] < array[i - 1]) or (not reverse and array[i] > array[i - 1]):
             current_sequence.append(array[i])
         else:
-            if len(current_sequence) > len(max_asc_sequence):
-                max_asc_sequence = current_sequence
+            if len(current_sequence) > len(max_sequence):
+                max_sequence = current_sequence
             current_sequence = [array[i]]
 
-    if len(current_sequence) > len(max_asc_sequence):
-        max_asc_sequence = current_sequence
+    if len(current_sequence) > len(max_sequence):
+        max_sequence = current_sequence
 
-    return max_asc_sequence
-
-
-def get_max_desc_sequence(array):
-    max_desc_sequence = []
-    current_sequence = [array[0]]
-
-    for i in range(1, len(array)):
-        if array[i] < array[i - 1]:
-            current_sequence.append(array[i])
-        else:
-            if len(current_sequence) > len(max_desc_sequence):
-                max_desc_sequence = current_sequence
-            current_sequence = [array[i]]
-
-    if len(current_sequence) > len(max_desc_sequence):
-        max_desc_sequence = current_sequence
-
-    return max_desc_sequence
+    return max_sequence
 
 
 numbers = get_data("10m.txt")
@@ -69,5 +51,5 @@ print(f"Max: {get_max(numbers)}")
 print(f"Min: {get_min(numbers)}")
 print(f"Median: {get_median(numbers)}")
 print(f"Average: {round(get_average(numbers), 2)}")
-print(f"Max asc sequence: {get_max_asc_sequence(numbers)}")
-print(f"Max desc sequence: {get_max_desc_sequence(numbers)}")
+print(f"Max asc sequence: {get_max_sequence(numbers)}")
+print(f"Max desc sequence: {get_max_sequence(numbers, reverse=True)}")
